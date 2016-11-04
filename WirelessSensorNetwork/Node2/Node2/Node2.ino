@@ -10,7 +10,8 @@ void loop(){
   
   cmd = Serial.read();
   if(cmd == 'R'){
-    Serial.println("NODE 1");
+    delay(100);
+    Serial.println("NODE 2");
   }
 
   
