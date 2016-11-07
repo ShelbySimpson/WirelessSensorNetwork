@@ -75,6 +75,11 @@ void sample() {
 }
 
 void stop_sampling() {
+
+  //Allow the nodes to transmit their info in order
+  //Node 1 will send immediately, Node 2 after 1 second, Node 3 after 2 seconds, etc.
+  delay((ID - 1) * 1000);
+
   emptyBuffer();
   digitalWrite(13, LOW); //ensure that light is of when iterrupt is stopped
   tm = 0;
