@@ -1,3 +1,7 @@
+#define ID 1
+
+bool bufFlag = true;
+
 void setup(){
   Serial.begin(9600);
   pinMode(A0,INPUT);
