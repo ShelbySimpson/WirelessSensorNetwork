@@ -6,7 +6,7 @@
 //id will be used to determine node's turn to send
 #define ID 1
 //num of nodes in network
-#define num_nodes 2
+#define num_nodes 3
 unsigned short tm;//track time in seconds
 QueueArray <unsigned short> queue;//buffer for data packets
 //=========================================================
