@@ -9,7 +9,6 @@
 #define num_nodes 2
 unsigned short tm;//track time in seconds
 QueueArray <unsigned short> queue;//buffer for data packets
-unsigned short count;
 //=========================================================
 
 //Helper functions ========================================
@@ -23,7 +22,6 @@ void setup() {
   Serial.begin(9600);//baud
   pinMode(13, OUTPUT); //sync led
   pinMode(A0, INPUT); //sensor
-  count = 0;
   tm = 0;//init time
   // set the printer of the queue.
   queue.setPrinter (Serial);
@@ -75,6 +73,9 @@ void sample() {
 }
 
 void stop_sampling() {
+
+  delay((ID - 1) * 1000);
+
   emptyBuffer();
   digitalWrite(13, LOW); //ensure that light is of when iterrupt is stopped
   tm = 0;
@@ -82,6 +83,8 @@ void stop_sampling() {
 
 //empty buffer as packets are sent
 void emptyBuffer(){
+    unsigned short count = 0;
+
      while (!queue.isEmpty()) {
       Serial << queue.dequeue();//transmit data
       //format packet output: ID,Time,Data
