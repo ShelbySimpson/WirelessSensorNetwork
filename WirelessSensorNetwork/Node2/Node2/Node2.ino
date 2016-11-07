@@ -9,6 +9,7 @@
 #define num_nodes 3
 unsigned short tm;//track time in seconds
 QueueArray <unsigned short> queue;//buffer for data packets
+boolean output = HIGH;
 //=========================================================
 
 //Helper functions ========================================
@@ -40,6 +41,7 @@ void loop() {
   if (cmd == 'S') {
     //sync lights and samples
     MsTimer2::stop();
+    output = HIGH;
     MsTimer2::set(1000, sample); //Sample 1hz
     MsTimer2::start();
     sample();
@@ -57,7 +59,6 @@ void loop() {
 //samples and toggles led in unison.
 void sample() {
   //Toggle light D13 LED--------------------
-  static boolean output = HIGH;
   digitalWrite(13, output);
   output = !output;
   //----------------------------------------

@@ -4,11 +4,12 @@
 
 //vars====================================================
 //id will be used to determine node's turn to send
-#define ID 2
+#define ID 3
 //num of nodes in network
 #define num_nodes 3
 unsigned short tm;//track time in seconds
 QueueArray <unsigned short> queue;//buffer for data packets
+boolean output = HIGH;
 //=========================================================
 
 //Helper functions ========================================
@@ -21,7 +22,7 @@ void stop_sampling();
 void setup() {
   Serial.begin(9600);//baud
   pinMode(13, OUTPUT); //sync led
-  pinMode(A0, INPUT); //sensor
+  pinMode(5, INPUT); //sensor
   tm = 0;//init time
   // set the printer of the queue.
   queue.setPrinter (Serial);
@@ -40,6 +41,7 @@ void loop() {
   if (cmd == 'S') {
     //sync lights and samples
     MsTimer2::stop();
+    output = HIGH;
     MsTimer2::set(1000, sample); //Sample 1hz
     MsTimer2::start();
     sample();
@@ -50,6 +52,7 @@ void loop() {
     MsTimer2::stop();
     stop_sampling();
   }
+
 }
 //===================================================================
 
@@ -57,14 +60,13 @@ void loop() {
 //samples and toggles led in unison.
 void sample() {
   //Toggle light D13 LED--------------------
-  static boolean output = HIGH;
   digitalWrite(13, output);
   output = !output;
   //----------------------------------------
   //create data packet
   queue.push(ID);
   queue.push(tm);
-  queue.push(analogRead(A0));
+  queue.push(digitalRead(5));
   if (tm % num_nodes + 1 == ID) { //node's turn to transmit
     //Serial << "this is time" << tm << endl;
     emptyBuffer();
