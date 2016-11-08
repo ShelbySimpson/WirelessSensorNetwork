@@ -36,18 +36,14 @@ void loop() {
     MsTimer2::stop();
     MsTimer2::set(1000, sample); //Sample 1hz
     MsTimer2::start();
-  }
-
-  if (cmd == 'S') {
+  }else if (cmd == 'S') {
     //sync lights and samples
     MsTimer2::stop();
     output = HIGH;
     MsTimer2::set(1000, sample); //Sample 1hz
     MsTimer2::start();
     sample();
-  }
-
-  if (cmd == 'T') {
+  }else if (cmd == 'T') {
     //Stop sampling
     MsTimer2::stop();
     stop_sampling();
