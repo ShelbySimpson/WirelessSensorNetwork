@@ -14,7 +14,7 @@ boolean output = HIGH;
 
 //Helper functions ========================================
 void sample();
-void emptyBuffer();
+void transmit();
 void stop_sampling();
 //=========================================================
 
@@ -69,7 +69,7 @@ void sample() {
   queue.push(digitalRead(5));
   if (tm % num_nodes + 1 == ID) { //node's turn to transmit
     //Serial << "this is time" << tm << endl;
-    emptyBuffer();
+    transmit();
   }
   tm++;//increment the time counter
 }
@@ -78,13 +78,13 @@ void stop_sampling() {
 
   delay((ID - 1) * 1000);
 
-  emptyBuffer();
+  transmit();
   digitalWrite(13, LOW); //ensure that light is of when iterrupt is stopped
   tm = 0;
 }
 
 //empty buffer as packets are sent
-void emptyBuffer(){
+void transmit(){
     unsigned short count = 0;
 
      while (!queue.isEmpty()) {
